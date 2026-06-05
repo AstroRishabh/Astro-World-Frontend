@@ -79,7 +79,7 @@ export default function Kundli() {
       );
       const geoData = await geoRes.json();
 
-      const res = await fetch("http://localhost:5001/calculate", {
+      const res = await fetch("https://astro-world-engine-4.onrender.com/calculate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
