@@ -24,7 +24,7 @@ export default function KundliMilan() {
     setResult(null);
 
     try {
-      const response = await fetch("http://localhost:5000/api/match-kundli", {
+      const response = await fetch("https://astro-world-engine-4.onrender.com", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
