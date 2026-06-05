@@ -17,7 +17,7 @@ export default function Numerology() {
 
     try {
 
-      const res = await fetch("https://astro-world-engine-4.onrender.com/api/numerology/calculate", {
+      const res = await fetch("https://astro-world-1.onrender.com/api/numerology/calculate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, dob })
