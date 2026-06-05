@@ -87,7 +87,7 @@ export default function AIKundli() {
 
     try {
 
-      const res = await fetch("http://localhost:5000/api/kundli/generate", {
+      const res = await fetch("https://astro-world-1.onrender.com/api/kundli/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData)
@@ -142,7 +142,7 @@ export default function AIKundli() {
 
     try {
 
-      const res = await fetch("http://localhost:5000/api/ai/ask-ai", {
+      const res = await fetch("https://astro-world-1.onrender.com/api/ai/ask-ai", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
