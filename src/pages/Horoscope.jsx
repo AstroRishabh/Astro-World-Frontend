@@ -23,7 +23,7 @@ function GenerateKundli() {
 
     const token = localStorage.getItem("token");
 
-    const res = await fetch("http://localhost:5000/api/kundli/generate", {
+    const res = await fetch("https://astro-world-1.onrender.com/api/kundli/generate", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
