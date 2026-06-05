@@ -63,7 +63,7 @@ export default function Booking() {
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:5000/api/booking/create", {
+      const response = await fetch("https://astro-world-1.onrender.com/api/booking/create", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form)
