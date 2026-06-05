@@ -13,7 +13,7 @@ const Signup = () => {
     e.preventDefault();
 
     try {
-      const res = await fetch("https://astro-world-engine-4.onrender.com", {
+      const res = await fetch("https://astro-world-engine-4.onrender.com/api/auth/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
