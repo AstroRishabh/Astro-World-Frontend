@@ -32,7 +32,7 @@ export default function Booking() {
 
     const fetchSlots = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/api/booking/slots?date=${form.date}`);
+        const res = await fetch(`https://astro-world-1.onrender.com/api/booking/slots?date=${form.date}`);
         const data = await res.json();
         setBookedSlots(data.bookedSlots || []);
       } catch (err) {
