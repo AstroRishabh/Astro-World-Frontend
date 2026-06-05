@@ -1,0 +1,240 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Cinzel:wght@600&display=swap');
+
+:root {
+  --primary-gold: #ffd700;
+  --cosmic-purple: #1a0b2e;
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --neon-cyan: #00f2fe;
+}
+
+.astro-booking-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(circle at center, #2b1055, #23054f, #2f07a7);
+  font-family: 'Poppins', sans-serif;
+  color: #ffffff;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Twinkling background stars effect */
+.twinkling-stars {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: 
+    radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px),
+    radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 30px);
+  background-size: 550px 550px, 350px 350px;
+  background-position: 0 0, 40px 60px;
+  animation: starTwinkle 150s linear infinite;
+  opacity: 0.4;
+  z-index: 1;
+}
+
+.astro-card {
+  z-index: 2;
+  width: 100%;
+  max-width: 600px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  padding: 40px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 0 30px rgba(111, 66, 193, 0.2);
+  text-align: center;
+}
+
+.zodiac-icon {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+  filter: drop-shadow(0 0 10px var(--primary-gold));
+  animation: float 3s ease-in-out infinite;
+}
+
+.title {
+  font-family: 'Cinzel', serif;
+  font-size: 2rem;
+  color: var(--primary-gold);
+  margin-bottom: 8px;
+  letter-spacing: 1.5px;
+  text-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+}
+
+.subtitle {
+  font-weight: 300;
+  color: #b3a1d9;
+  font-size: 0.95rem;
+  margin-bottom: 30px;
+}
+
+/* Inputs styling */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  text-align: left;
+}
+
+@media (max-width: 600px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-group label {
+  font-size: 0.85rem;
+  margin-bottom: 6px;
+  color: #d1c4e9;
+  letter-spacing: 0.5px;
+}
+
+.input-group input {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  padding: 12px 16px;
+  color: white;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.input-group input:focus {
+  border-color: var(--primary-gold);
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+  background: rgba(0, 0, 0, 0.5);
+}
+
+/* Slots UI */
+.slots-section {
+  margin-top: 35px;
+  text-align: left;
+}
+
+.slots-title {
+  font-size: 1rem;
+  color: #d1c4e9;
+  margin-bottom: 15px;
+  font-weight: 500;
+}
+
+.slots-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 12px;
+}
+
+.slot-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  padding: 12px 10px;
+  color: #ffffff;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.slot-btn:hover:not(:disabled) {
+  border-color: var(--neon-cyan);
+  transform: translateY(-3px);
+  background: rgba(0, 242, 254, 0.1);
+  box-shadow: 0 5px 15px rgba(0, 242, 254, 0.2);
+}
+
+.slot-btn.selected {
+  border-color: var(--primary-gold);
+  background: rgba(255, 215, 0, 0.15);
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+  font-weight: 600;
+  color: var(--primary-gold);
+}
+
+.slot-btn.booked {
+  background: rgba(255, 0, 0, 0.05);
+  border-color: rgba(255, 0, 0, 0.2);
+  color: #7a6e8a;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.status-badge {
+  font-size: 0.65rem;
+  color: #ff4d4d;
+  margin-top: 4px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* Submit Button */
+.submit-btn {
+  width: 100%;
+  margin-top: 35px;
+  padding: 14px;
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #8a2be2, #4a00e0);
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 8px 25px rgba(138, 43, 226, 0.4);
+  transition: all 0.3s ease;
+}
+
+.submit-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(138, 43, 226, 0.6);
+  background: linear-gradient(135deg, #9b41ff, #5611f5);
+}
+
+.submit-btn:disabled {
+  background: #3c2f54;
+  color: #7a6e8a;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Keyframes */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes starTwinkle {
+  from { background-position: 0 0; }
+  to { background-position: -10000px 5000px; }
+}
+.input-error {
+  border-color: #ff4d4d !important;
+  box-shadow: 0 0 10px rgba(255, 77, 77, 0.3) !important;
+}
+
+.error-message {
+  font-size: 0.75rem;
+  color: #ff4d4d;
+  margin-top: 5px;
+  font-weight: 500;
+  animation: shake 0.4s ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}

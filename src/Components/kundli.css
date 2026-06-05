@@ -1,0 +1,67 @@
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  background: radial-gradient(circle, #0b0c2a, #000);
+  color: white;
+}
+
+.astro-container {
+  text-align: center;
+  padding: 20px;
+}
+
+h1 {
+  color: gold;
+  margin-bottom: 20px;
+}
+
+.cards {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.card {
+  background: rgba(255,255,255,0.05);
+  padding: 20px;
+  border-radius: 15px;
+  width: 250px;
+  backdrop-filter: blur(10px);
+}
+
+input {
+  display: block;
+  width: 90%;
+  margin: 8px auto;
+  padding: 8px;
+  border-radius: 8px;
+  border: none;
+}
+
+.match-btn {
+  margin-top: 20px;
+  padding: 12px 25px;
+  background: linear-gradient(45deg, gold, orange);
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.result-box {
+  margin-top: 30px;
+}
+
+table {
+  margin: auto;
+  border-collapse: collapse;
+  width: 60%;
+}
+
+td, th {
+  padding: 10px;
+  border: 1px solid #555;
+}
+
+.green { color: lightgreen; }
+.yellow { color: yellow; }
+.red { color: red; }

@@ -1,0 +1,26 @@
+{
+  "title": "Generate Kundli",
+  "name": "Full Name",
+  "gender": "Gender",
+  "male": "Male",
+  "female": "Female",
+  "birthDate": "Birth Date",
+  "birthTime": "Birth Time",
+  "birthPlace": "Birth Place",
+  "generate": "Generate Kundli",
+
+  "lagna": "Lagna",
+  "nakshatra": "Nakshatra",
+  "pada": "Pada",
+  "lord": "Lord",
+
+  "planet": "Planet",
+  "degree": "Degree",
+  "sign": "Sign",
+  "house": "House",
+
+  "dasha": "Vimshottari Dasha",
+  "mahadasha": "Mahadasha",
+  "antardasha": "Antardasha",
+  "pratyantar": "Pratyantar Dasha"
+}

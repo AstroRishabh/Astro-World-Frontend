@@ -1,0 +1,26 @@
+{
+  "title": "कुंडली बनाएं",
+  "name": "पूरा नाम",
+  "gender": "लिंग",
+  "male": "पुरुष",
+  "female": "महिला",
+  "birthDate": "जन्म तिथि",
+  "birthTime": "जन्म समय",
+  "birthPlace": "जन्म स्थान",
+  "generate": "कुंडली बनाएं",
+
+  "lagna": "लग्न",
+  "nakshatra": "नक्षत्र",
+  "pada": "पाद",
+  "lord": "स्वामी",
+
+  "planet": "ग्रह",
+  "degree": "अंश",
+  "sign": "राशि",
+  "house": "भाव",
+
+  "dasha": "विंशोत्तरी दशा",
+  "mahadasha": "महादशा",
+  "antardasha": "अंतर्दशा",
+  "pratyantar": "प्रत्यंतर दशा"
+}
