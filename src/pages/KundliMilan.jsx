@@ -35,7 +35,7 @@ export default function KundliMilan() {
       setLoading(true);
 
       const response = await fetch(
-        "http://localhost:5000/api/kundli-milan/match",
+        "https://astro-world-1.onrender.com/api/kundli-milan/match",
         {
           method: "POST",
 
