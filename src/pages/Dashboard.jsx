@@ -1,6 +1,6 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
-import BookingModal from "../components/BookingModal";
+import BookingModal from "../Components/BookingModal";
 import "./Dashboard.css";
 
 export default function Dashboard() {
