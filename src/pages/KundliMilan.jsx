@@ -12,7 +12,7 @@ export default function KundliMilan() {
     e.preventDefault();
     try {
       setLoading(true);
-      const response = await fetch("http://localhost:5000/api/kundli-milan/match", {
+      const response = await fetch("https://astro-world-1.onrender.com/api/kundli-milan/match", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ boy, girl })
