@@ -1,14 +1,18 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
-import BookingModal from "../Components/BookingModal";
+import BookingModal from "../components/BookingModal";
 import "./Dashboard.css";
 
 export default function Dashboard() {
   const navigate = useNavigate();
   const location = useLocation();
+  
   const [showModal, setShowModal] = useState(false);
   const [user, setUser] = useState(null);
   const [activeAstrologer, setActiveAstrologer] = useState(null);
+  
+  // 🔥 Mobile Hamburger Sidebar State Trigger
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -38,6 +42,10 @@ export default function Dashboard() {
     setShowModal(true);
   };
 
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
   const menuItems = [
     { name: "Dashboard", path: "/dashboard", icon: "📊" },
     { name: "Kundli", path: "/kundli", icon: "📜" },
@@ -65,8 +73,21 @@ export default function Dashboard() {
     <div className="dashboard-container">
       <div className="stars-layer"></div>
 
-      {/* Sidebar - Sleek & Modern */}
-      <aside className="sidebar">
+      {/* Mobile Header Toolbar - Laptop par automatic hidden rahega */}
+      <div className="mobile-top-bar">
+        <button className="hamburger-btn" onClick={toggleSidebar} aria-label="Toggle Menu">
+          {isSidebarOpen ? "✕" : "☰"}
+        </button>
+        <div className="mobile-logo">
+          <span>✨</span> Astro World
+        </div>
+      </div>
+
+      {/* Mobile Backdrop Overlay - Sidebar khulne par background click se close karne ke liye */}
+      {isSidebarOpen && <div className="sidebar-overlay" onClick={toggleSidebar}></div>}
+
+      {/* Sidebar Layout - Mobile toggle matching classes updated */}
+      <aside className={`sidebar ${isSidebarOpen ? "sidebar-mobile-open" : ""}`}>
         <div className="logo-section">
           <span className="logo-spark">✨</span>
           <h1>Astro World</h1>
@@ -77,7 +98,10 @@ export default function Dashboard() {
             <div
               key={item.path}
               className={`nav-item ${location.pathname === item.path ? "active" : ""}`}
-              onClick={() => navigate(item.path)}
+              onClick={() => {
+                navigate(item.path);
+                setIsSidebarOpen(false); // Mobile par page click hote hi close ho jaye
+              }}
             >
               <span className="nav-icon">{item.icon}</span>
               <span className="nav-text">{item.name}</span>
@@ -92,7 +116,7 @@ export default function Dashboard() {
         </div>
       </aside>
 
-      {/* Main Content Area */}
+      {/* Main Content Workspace Layout */}
       <main className="main-content">
         
         {/* Header - Glassmorphic Profile Box */}
@@ -115,7 +139,7 @@ export default function Dashboard() {
           </div>
         </header>
 
-        {/* Dynamic Feature Grid with Scale Animations */}
+        {/* Cosmic Toolkit Grid Layout */}
         <section className="section-container">
           <h3 className="section-title">🔮 Cosmic Toolkit</h3>
           <div className="features-grid">
@@ -137,7 +161,7 @@ export default function Dashboard() {
           </div>
         </section>
 
-        {/* Dynamic Booking Section with Realistic Astrology Profiles */}
+        {/* Astrologers Profiles Row Layout */}
         <section className="section-container">
           <div className="section-header-row">
             <h3 className="section-title">👳 Book your appointment with our best Astrologers</h3>
@@ -165,7 +189,7 @@ export default function Dashboard() {
                 </div>
                 <button 
                   className="astro-book-btn" 
-                  onClick={() => navigate("/booking")}
+                  onClick={() => handleBookAstrologer(astro)} // Fixed: Triggers modal state correctly with data
                 >
                   Schedule Session
                 </button>
