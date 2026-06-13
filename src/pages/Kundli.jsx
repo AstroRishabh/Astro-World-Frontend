@@ -3,6 +3,8 @@ import "./Kundli.css";
 import { useTranslation } from "react-i18next";
 
 export default function Kundli() {
+  // FIXED: Hook ko ab component ke andar move kar diya hai
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
   const [chartType, setChartType] = useState("D1");
@@ -42,7 +44,7 @@ export default function Kundli() {
   };
 
   function getPlanetLabel(planet) {
-    const data = result.planets[planet];
+    const data = result?.planets?.[planet];
     let label = PLANET_SYMBOLS[planet] || planet;
     if (data?.retrograde) label += "*";
     if (data?.combust) label += "☀";
@@ -79,7 +81,7 @@ export default function Kundli() {
       );
       const geoData = await geoRes.json();
 
-      const res = await fetch("https://astro-world-engine-4.onrender.com/calculate", {
+      const res = await fetch("http://localhost:5001/calculate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -149,33 +151,62 @@ export default function Kundli() {
 
       {result && (
         <div className="results-container slide-up-heavy">
-          <div className="lang-switch">
-            <button className={i18n.language === "en" ? "active-lang" : ""} onClick={() => i18n.changeLanguage("en")}>EN</button>
-            <button className={i18n.language === "hi" ? "active-lang" : ""} onClick={() => i18n.changeLanguage("hi")}>HI</button>
+          <div className="mobile-topbar">
+            <button
+              className="hamburger-btn"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            >
+              ☰
+            </button>
+            <h3>Kundli Dashboard</h3>
           </div>
+          <div className={`mobile-sidebar ${mobileMenuOpen ? "open" : ""}`}>
+            <div className="lang-switch">
+              <button
+                className={i18n.language === "en" ? "active-lang" : ""}
+                onClick={() => i18n.changeLanguage("en")}
+              >
+                EN
+              </button>
+              <button
+                className={i18n.language === "hi" ? "active-lang" : ""}
+                onClick={() => i18n.changeLanguage("hi")}
+              >
+                HI
+              </button>
+            </div>
 
-          <div className="glass-card profile-banner">
-            <div className="profile-item">
-              <label>Native</label>
-              <span className="glow-text-subtle">{formData.name}</span>
+            <div className="glass-card profile-banner">
+              <div className="profile-item">
+                <label>Native</label>
+                <span className="glow-text-subtle">
+                  {formData.name}
+                </span>
+              </div>
+              <div className="profile-item highlight">
+                <label>Lagna</label>
+                <span>
+                  {result?.lagna?.sign}
+                </span>
+              </div>
+              <div className="profile-item highlight">
+                <label>Nakshatra</label>
+                <span>
+                  {result?.nakshatra?.nakshatra}
+                </span>
+              </div>
             </div>
-            <div className="profile-item highlight">
-              <label>Lagna (Ascendant)</label>
-              <span>{result.lagna.sign} <small>{result.lagna.degree.toFixed(2)}°</small></span>
-            </div>
-            <div className="profile-item highlight">
-              <label>Nakshatra</label>
-              <span>{result.nakshatra.nakshatra}</span>
-              <small>Pada {result.nakshatra.pada} (Lord: {result.nakshatra.lord})</small>
-            </div>
-          </div>
 
-          <div className="chart-select">
-            <select value={chartType} onChange={(e) => setChartType(e.target.value)}>
-              <option value="D1">Lagna Chart (D1)</option>
-              <option value="D4">Chaturthamsa (D4)</option>
-              <option value="D9">Navamsa (D9)</option>
-            </select>
+            <div className="chart-select">
+              <select
+                value={chartType}
+                onChange={(e) => setChartType(e.target.value)}
+              >
+                <option value="D1">Lagna Chart (D1)</option>
+                <option value="D4">Chaturthamsa (D4)</option>
+                <option value="D9">Navamsa (D9)</option>
+              </select>
+            </div>
           </div>
 
           <div className="main-grid">
@@ -197,7 +228,7 @@ export default function Kundli() {
                   <line x1="0" y1="200" x2="200" y2="0" className="chart-line" />
 
                   {houseConfig.map((house) => {
-                    const startSign = RASHI_MAP[result.lagna.sign];
+                    const startSign = RASHI_MAP[result?.lagna?.sign] || 1;
                     const rashiNum = ((startSign + house.id - 2) % 12) + 1;
                     const planets = chartData?.[house.id] || chartData?.[String(house.id)] || [];
 
@@ -239,11 +270,11 @@ export default function Kundli() {
                     </tr>
                   </thead>
                   <tbody>
-                    {Object.entries(result.planets).map(([p, val]) => (
+                    {result?.planets && Object.entries(result.planets).map(([p, val]) => (
                       <tr key={p}>
                         <td className="p-bold" style={{ color: PLANET_COLORS[p] }}>{p}</td>
                         <td>{val.sign}</td>
-                        <td>{val.degree.toFixed(2)}°</td>
+                        <td>{val?.degree?.toFixed(2)}°</td>
                         <td>{planetHouseMap[p] || "-"}</td>
                         <td>{val.retrograde ? "Yes" : "No"}</td>
                       </tr>
@@ -258,9 +289,9 @@ export default function Kundli() {
           <div className="glass-card dasha-container">
             <h3 className="section-title">Vimshottari Dasha</h3>
             <div className="dasha-list">
-              {result.dasha.map((maha, mIndex) => (
+              {result?.dasha?.map((maha, mIndex) => (
                 <div key={mIndex} className="dasha-item">
-                  <div className="maha-row" onClick={() => setOpenMaha(openMaha === mIndex ? null : mIndex)}>
+                  <div className="maha-row" onClick={() => { setOpenMaha(openMaha === mIndex ? null : mIndex); setOpenAntar(null); }}>
                     <span className={`arrow ${openMaha === mIndex ? "down" : ""}`}>✦</span>
                     <span className="p-name" style={{ color: PLANET_COLORS[maha.planet] }}>{maha.planet} Mahadasha</span>
                     <span className="dates">{maha.start} - {maha.end}</span>
@@ -268,25 +299,28 @@ export default function Kundli() {
 
                   <div className={`collapsible-content ${openMaha === mIndex ? "open" : ""}`}>
                     <div className="antar-list">
-                      {maha.antar.map((antar, aIndex) => (
-                        <div key={aIndex} className="antar-item">
-                          <div className="antar-row" onClick={(e) => { e.stopPropagation(); setOpenAntar(openAntar === aIndex ? null : aIndex); }}>
-                            <span>{antar.planet}</span>
-                            <span className="dates">{antar.start} - {antar.end}</span>
-                          </div>
-                          
-                          <div className={`collapsible-content ${openAntar === aIndex ? "open" : ""}`}>
-                            <div className="prat-list">
-                              {antar.pratyantar.map((p, pIndex) => (
-                                <div key={pIndex} className="prat-row">
-                                  <span>{p.planet}</span>
-                                  <span className="dates">{p.start} - {p.end}</span>
-                                </div>
-                              ))}
+                      {maha?.antar?.map((antar, aIndex) => {
+                        const uniqueAntarKey = `${mIndex}-${aIndex}`;
+                        return (
+                          <div key={aIndex} className="antar-item">
+                            <div className="antar-row" onClick={(e) => { e.stopPropagation(); setOpenAntar(openAntar === uniqueAntarKey ? null : uniqueAntarKey); }}>
+                              <span>{antar.planet}</span>
+                              <span className="dates">{antar.start} - {antar.end}</span>
+                            </div>
+
+                            <div className={`collapsible-content ${openAntar === uniqueAntarKey ? "open" : ""}`}>
+                              <div className="prat-list">
+                                {antar?.pratyantar?.map((p, pIndex) => (
+                                  <div key={pIndex} className="prat-row">
+                                    <span>{p.planet}</span>
+                                    <span className="dates">{p.start} - {p.end}</span>
+                                  </div>
+                                ))}
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      ))}
+                        );
+                      })}
                     </div>
                   </div>
                 </div>
