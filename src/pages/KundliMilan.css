@@ -1,139 +1,287 @@
-body{
-  margin:0;
-  font-family:Arial, Helvetica, sans-serif;
-  background:#060010;
+body {
+  margin: 0;
+  font-family: 'Outfit', Arial, Helvetica, sans-serif; /* Fallback support ke sath premium look */
+  background: #060010;
 }
 
-.kundli-container{
-  min-height:100vh;
-  background:url("https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1974&auto=format&fit=crop");
-  background-size:cover;
-  background-position:center;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  padding:40px 20px;
+.kundli-container {
+  min-height: 100vh;
+  background: linear-gradient(rgba(6, 0, 16, 0.6), rgba(6, 0, 16, 0.85)), 
+              url("https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1974&auto=format&fit=crop");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed; /* Parallax effect jo background ko smooth banata hai */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 20px;
+  box-sizing: border-box;
 }
 
-.overlay{
-  width:100%;
-  max-width:1200px;
-  background:rgba(0,0,0,0.75);
-  padding:40px;
-  border-radius:20px;
-  color:white;
-  backdrop-filter:blur(10px);
+.overlay {
+  width: 100%;
+  max-width: 1100px;
+  background: rgba(13, 3, 29, 0.75); /* Deep cosmic gradient transparency */
+  padding: 50px 40px;
+  border-radius: 24px;
+  color: white;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 215, 0, 0.15); /* Soft gold neon card border border */
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
 }
 
-.title{
-  text-align:center;
-  font-size:50px;
-  margin-bottom:10px;
-  color:#ffd700;
+.title {
+  text-align: center;
+  font-size: 42px;
+  font-weight: 700;
+  margin: 0 0 10px 0;
+  color: #ffd700;
+  letter-spacing: 0.5px;
+  text-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
 }
 
-.subtitle{
-  text-align:center;
-  margin-bottom:40px;
-  color:#ccc;
+.subtitle {
+  text-align: center;
+  margin: 0 0 45px 0;
+  color: #b3a1d9;
+  font-size: 16px;
 }
 
-.kundli-form{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:30px;
+/* ================== FORM MANAGEMENT LAYOUTS ================== */
+.kundli-form {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
 }
 
-.form-box{
-  background:rgba(255,255,255,0.08);
-  padding:25px;
-  border-radius:15px;
+/* Two-column structural grid row mapping both partners */
+.form-sections-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
 }
 
-.form-box h2{
-  margin-bottom:20px;
-  color:#ffd700;
+.form-box {
+  background: rgba(255, 255, 255, 0.03);
+  padding: 30px;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.05);
 }
 
-.form-box input{
-  width:100%;
-  padding:14px;
-  margin-bottom:15px;
-  border:none;
-  border-radius:10px;
-  background:#1d1033;
-  color:white;
-  font-size:15px;
+.form-box h2 {
+  margin: 0 0 25px 0;
+  color: #ffd700;
+  font-size: 20px;
+  font-weight: 600;
+  border-bottom: 1px solid rgba(255, 215, 0, 0.15);
+  padding-bottom: 10px;
 }
 
-.form-box input:focus{
-  outline:none;
-  border:1px solid #ffd700;
+.form-fields-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
 }
 
-.submit-btn{
-  grid-column:1/3;
-  padding:16px;
-  border:none;
-  border-radius:12px;
-  background:#ffd700;
-  color:black;
-  font-size:18px;
-  font-weight:bold;
-  cursor:pointer;
-  transition:0.3s;
+/* Horizontal alignment block mapping for corresponding inline labels */
+.horizontal-input-group {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  align-items: center;
+  gap: 12px;
 }
 
-.submit-btn:hover{
-  transform:scale(1.02);
+.form-box input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  background: #1d1033;
+  color: white;
+  font-size: 15px;
+  box-sizing: border-box;
+  transition: all 0.25s ease;
 }
 
-.result-box{
-  margin-top:40px;
-  background:rgba(255,255,255,0.08);
-  padding:30px;
-  border-radius:20px;
+.form-box input:focus {
+  outline: none;
+  border-color: #ffd700;
+  background: #251442;
+  box-shadow: 0 0 12px rgba(255, 215, 0, 0.2);
 }
 
-.score{
-  font-size:70px;
-  text-align:center;
-  color:#ffd700;
+/* Standardizing cross-browser styling fixes for input utilities */
+.form-box input[type="date"]::-webkit-calendar-picker-indicator,
+.form-box input[type="time"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+  cursor: pointer;
 }
 
-.compatibility{
-  text-align:center;
-  margin-bottom:30px;
+/* Dynamic Action Button Control */
+.submit-btn {
+  width: 100%;
+  max-width: 400px;
+  margin: 10px auto 0 auto; /* Grid columns dependency dropped for perfect viewport execution */
+  padding: 16px 30px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #ffd700, #cca300);
+  color: #060010;
+  font-size: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(255, 215, 0, 0.2);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-table{
-  width:100%;
-  border-collapse:collapse;
+.submit-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 215, 0, 0.35);
 }
 
-table th,
-table td{
-  border:1px solid rgba(255,255,255,0.2);
-  padding:14px;
-  text-align:center;
+.submit-btn:active:not(:disabled) {
+  transform: translateY(0);
 }
 
-table th{
-  background:#2b1647;
-  color:#ffd700;
+.submit-btn:disabled {
+  background: #4a4357;
+  color: #8c8599;
+  cursor: not-allowed;
+  box-shadow: none;
 }
 
-@media(max-width:768px){
+/* ================== ASTROLOGICAL DATA OUTPUTS ================== */
+.result-box {
+  margin-top: 50px;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 35px;
+  border-radius: 20px;
+  border: 1px solid rgba(138, 43, 226, 0.2); /* Neon cosmic subtle boundary indicator */
+}
 
-  .kundli-form{
-    grid-template-columns:1fr;
+.result-box h2 {
+  text-align: center;
+  color: #fff;
+  margin-top: 0;
+  font-size: 22px;
+}
+
+.score-wrapper {
+  margin: 20px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.score-label {
+  font-size: 13px;
+  color: #b3a1d9;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.score {
+  font-size: 64px;
+  font-weight: 800;
+  text-align: center;
+  color: #ffd700;
+  margin: 5px 0;
+  text-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+}
+
+.compatibility {
+  text-align: center;
+  margin-bottom: 35px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #fff;
+}
+
+/* Premium Matrix Representation Layouts */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto; /* Ensures wide grids render cleanly without page cracks */
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.guna-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.guna-table th,
+.guna-table td {
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 16px;
+  text-align: center;
+  font-size: 15px;
+}
+
+.guna-table th {
+  background: #2b1647;
+  color: #ffd700;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 13px;
+  letter-spacing: 0.5px;
+}
+
+.guna-table tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.01);
+}
+
+.guna-table tr:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.score-highlight {
+  color: #ffd700;
+  font-weight: 700;
+}
+
+/* --- ANIMATIONS ENGINE --- */
+.slide-up {
+  animation: slideUpEffect 0.5s cubic-bezier(0.1, 1, 0.1, 1) forwards;
+}
+
+@keyframes slideUpEffect {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ================== RESPONSIVE VIEWPORTS SYSTEM ================== */
+@media (max-width: 900px) {
+  .overlay {
+    padding: 35px 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .form-sections-grid {
+    grid-template-columns: 1fr; /* Form stacks into clean block rows sequentially */
+    gap: 24px;
   }
 
-  .submit-btn{
-    grid-column:1/2;
+  .horizontal-input-group {
+    grid-template-columns: 100px 1fr; /* Adapts size index layout values securely */
+    gap: 8px;
   }
 
-  .title{
-    font-size:35px;
+  .title {
+    font-size: 32px;
+  }
+
+  .score {
+    font-size: 50px;
+  }
+  
+  .guna-table th, .guna-table td {
+    padding: 12px;
+    font-size: 14px;
   }
 }
