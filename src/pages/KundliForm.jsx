@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function KundliForm() {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -18,37 +19,128 @@ export default function KundliForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
-    const response = await fetch("https://astro-world-1.onrender.com/api/kundli", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData)
-    });
+    try {
+      const response = await fetch("http://localhost:5000/api/kundli", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData)
+      });
 
-    const data = await response.json();
-
-    // 🔥 Navigate to result page with data
-    navigate("/result", { state: data });
+      const data = await response.json();
+      navigate("/result", { state: data });
+    } catch (error) {
+      console.error("Error generating Kundli:", error);
+      alert("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="form-container">
-      <h2>Generate Kundli</h2>
+      <div className="form-card" style={{ maxWidth: "500px" }}> {/* Thoda width badhaye horizontal spacing ke liye */}
+        <h2>Generate Kundli</h2>
+        <p className="form-subtitle">Enter your birth details to unlock premium cosmic insights.</p>
 
-      <form onSubmit={handleSubmit}>
-        <input name="name" placeholder="Name" onChange={handleChange} required />
-        <input type="date" name="date" onChange={handleChange} required />
-        <input type="time" name="time" onChange={handleChange} required />
-        <input name="place" placeholder="Place" onChange={handleChange} required />
+        <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "18px" }}>
+          
+          {/* Full Name Row */}
+          <div style={{ display: "grid", gridTemplateColumns: "130px 1fr", alignItems: "center", gap: "12px" }}>
+            <label htmlFor="name" style={{ color: "var(--text-muted)", fontSize: "13px", fontWeight: "600", textTransform: "uppercase", letterSpacing: "0.5px" }}>Full Name :</label>
+            <input 
+              id="name"
+              type="text"
+              name="name" 
+              placeholder="Enter full name" 
+              onChange={handleChange} 
+              disabled={loading}
+              style={{ width: "100%", boxSizing: "border-box" }}
+              required 
+            />
+          </div>
 
-        <select name="gender" onChange={handleChange} required>
-          <option value="">Select Gender</option>
-          <option>Male</option>
-          <option>Female</option>
-        </select>
+          {/* Date of Birth Row */}
+          <div style={{ display: "grid", gridTemplateColumns: "130px 1fr", alignItems: "center", gap: "12px" }}>
+            <label htmlFor="date" style={{ color: "var(--text-muted)", fontSize: "13px", fontWeight: "600", textTransform: "uppercase", letterSpacing: "0.5px" }}>Birth Date :</label>
+            <input 
+              id="date"
+              type="date" 
+              name="date" 
+              onChange={handleChange} 
+              disabled={loading}
+              style={{ width: "100%", boxSizing: "border-box" }}
+              required 
+            />
+          </div>
 
-        <button type="submit">Generate Kundli</button>
-      </form>
+          {/* Time of Birth Row */}
+          <div style={{ display: "grid", gridTemplateColumns: "130px 1fr", alignItems: "center", gap: "12px" }}>
+            <label htmlFor="time" style={{ color: "var(--text-muted)", fontSize: "13px", fontWeight: "600", textTransform: "uppercase", letterSpacing: "0.5px" }}>Birth Time :</label>
+            <input 
+              id="time"
+              type="time" 
+              name="time" 
+              onChange={handleChange} 
+              disabled={loading}
+              style={{ width: "100%", boxSizing: "border-box" }}
+              required 
+            />
+          </div>
+
+          {/* Place of Birth Row */}
+          <div style={{ display: "grid", gridTemplateColumns: "130px 1fr", alignItems: "center", gap: "12px" }}>
+            <label htmlFor="place" style={{ color: "var(--text-muted)", fontSize: "13px", fontWeight: "600", textTransform: "uppercase", letterSpacing: "0.5px" }}>Birth Place :</label>
+            <div className="geo-input-wrapper" style={{ width: "100%" }}>
+              <input 
+                id="place"
+                type="text"
+                name="place" 
+                placeholder="e.g. New Delhi, India" 
+                onChange={handleChange} 
+                disabled={loading}
+                style={{ width: "100%", boxSizing: "border-box" }}
+                required 
+              />
+              {formData.place && <span className="geo-success" style={{ right: "12px" }}>✅</span>}
+            </div>
+          </div>
+
+          {/* Gender Row */}
+          <div style={{ display: "grid", gridTemplateColumns: "130px 1fr", alignItems: "center", gap: "12px" }}>
+            <label htmlFor="gender" style={{ color: "var(--text-muted)", fontSize: "13px", fontWeight: "600", textTransform: "uppercase", letterSpacing: "0.5px" }}>Gender :</label>
+            <select 
+              id="gender"
+              name="gender" 
+              onChange={handleChange} 
+              className="form-card input"
+              disabled={loading}
+              style={{ width: "100%", boxSizing: "border-box", cursor: "pointer", padding: "14px 16px" }}
+              required
+            >
+              <option value="">Select Gender</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          {/* Action Button Row */}
+          <div style={{ display: "grid", gridTemplateColumns: "130px 1fr", gap: "12px", marginTop: "10px" }}>
+            <div></div> {/* Empty space to align button with inputs */}
+            <button 
+              type="submit" 
+              className={`gen-btn ${loading ? "btn-disabled" : ""}`}
+              disabled={loading}
+              style={{ width: "100%", margin: 0 }}
+            >
+              {loading ? "Calculating Charts..." : "Generate Kundli →"}
+            </button>
+          </div>
+
+        </form>
+      </div>
     </div>
   );
 }
